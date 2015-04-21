@@ -16,19 +16,17 @@ ko.bindingHandlers.json = {
     }
 };
 
+var wireTapConnection = new WiretapConnection();
+
+var messageCollection = new MessageCollection(wireTapConnection);
+
 $(document).ready(function () {
-    ko.applyBindings(new WiretapViewModel({connection: backgroundPageConnection}));
+    ko.applyBindings(new WiretapViewModel({collection: messageCollection}));
 });
 
 function WiretapViewModel(params) {
     var self = this,
-        allLogs = ko.observableArray([]),
         searchInput = ko.observable(),
-        filtered = ko.computed(function () {
-            return _.filter(allLogs(), function (event) {
-                return event.channel != 'postal';
-            });
-        }),
         searched = ko.computed(function () {
             var searchValue = searchInput();
 
@@ -39,7 +37,7 @@ function WiretapViewModel(params) {
                 } catch (error) {
 
                 }
-                return _.chain(filtered())
+                return _.chain(params.collection.messages())
                     .filter(parsedObjectFilter)
                     .filter(function (event) {
                         var searchRegex = new RegExp(searchValue, 'gi');
@@ -47,29 +45,18 @@ function WiretapViewModel(params) {
                     }).value();
             }
 
-
-            return filtered();
+            return params.collection.messages();
         }),
         recent = ko.computed(function () {
-            return _.take(filtered(), 4);
+            return _.take(params.collection.messages(), 4);
         });
 
-    params.connection.onMessage.addListener(function (message) {
-        if (message.type === 'init') {
-            allLogs([]);
-        } else {
-            allLogs.unshift(JSON.parse(message.data));
-        }
-    });
-
-    params.connection.postMessage({tabId: chrome.devtools.inspectedWindow.tabId});
-
     self.searchValue = searchInput;
-    self.allLogs = allLogs;
-    self.filtered = filtered;
+    self.messages = params.collection.messages;
     self.recent = recent;
     self.searched = searched;
     self.clear = function () {
-        allLogs([]);
+        params.collection.clear();
     };
+    self.filterSystemMessages = params.collection.filterSystemMessages;
 }

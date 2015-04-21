@@ -10,6 +10,8 @@
     <script src="/bower_components/renderjson/renderjson.js"></script>
     <script src="/bower_components/lodash/dist/lodash.js"></script>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/src/wiretap-connection.js"></script>
+    <script src="/src/message-collection.js"></script>
     <script src="wiretap-pane.js"></script>
 </head>
 <body>
@@ -17,28 +19,18 @@
 <div>
     <h2>Wiretap</h2>
     <button class="button" data-bind="click:clear">Clear</button>
+    <label for="filterSystemMessages">Filter system messages</label> <input type="checkbox" data-bind="checked:filterSystemMessages" id="filterSystemMessages"/>
 </div>
 
 <div class="col-md-4">
     <span>All</span>
-    <span>Total: <span data-bind="text:allLogs().length"></span></span>
+    <span>Total: <span data-bind="text:messages().length"></span></span>
     <div >
-        <!-- ko foreach: allLogs -->
+        <!-- ko foreach: messages -->
         <div data-bind="json: $data"></div>
         <!-- /ko -->
     </div>
 </div>
-
-<div class="col-md-4">
-    <span>Filtered</span>
-    <span>Total: <span data-bind="text:filtered().length"></span></span>
-    <div >
-        <!-- ko foreach: filtered -->
-        <div data-bind="json: $data"></div>
-        <!-- /ko -->
-    </div>
-</div>
-
 
 <div class="col-md-4">
     <span>Search</span>
