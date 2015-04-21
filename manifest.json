@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Wiretap",
+  "description": "This ",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "nativeMessaging"
+  ],
+  "externally_connectable": {
+    "matches": ["*://localhost/*"]
+  },
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "http://localhost/"
+        ],
+        "css": ["shared.css"],
+        "js": [
+          "require.config.js",
+          "bower_components/cajon/cajon.js",
+          "script.js"
+        ],
+        "run_at": "document_idle"
+      }
+    ]
+  }
+}

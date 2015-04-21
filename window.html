@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Wiretap</title>
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic" rel="stylesheet">
+    <link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_modules/chosen/chosen.min.css" rel="stylesheet">
+    <script src="require.config.js"></script>
+    <script data-main="background.js" src="bower_modules/requirejs/require.js"></script>
+</head>
+<body>
+
+<h2>Wiretap</h2>
+
+<div class="col-md-4">
+    <span>All</span>
+    <span>Total: <span data-bind="text:allLogs().length"></span></span>
+    <div >
+        <!-- ko foreach: allLogs -->
+        <div data-bind="json: $data"></div>
+        <!-- /ko -->
+    </div>
+</div>
+
+<div class="col-md-4">
+    <span>Filtered</span>
+    <span>Total: <span data-bind="text:filtered().length"></span></span>
+    <div >
+        <!-- ko foreach: filtered -->
+        <div data-bind="json: $data"></div>
+        <!-- /ko -->
+    </div>
+</div>
+
+
+<div class="col-md-4">
+    <span>Search</span>
+    <input data-bind="textInput: searchValue" />
+    <span>Total: <span data-bind="text:searched().length"></span></span>
+    <div >
+        <!-- ko foreach: searched -->
+        <div data-bind="json: $data"></div>
+        <!-- /ko -->
+    </div>
+</div>
+
+
+
+</body>
+<script>
+
+
+</script>
+</html>
