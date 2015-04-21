@@ -20,7 +20,6 @@
   ],
   "dependencies": {
     "jquery": "~2.1.1",
-    "cajon": "~0.2.5",
     "knockout": "~3.3.0",
     "knockout-projections": "~1.1.0",
     "requirejs-text": "~2.0.12",
