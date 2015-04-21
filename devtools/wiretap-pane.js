@@ -12,51 +12,32 @@ ko.bindingHandlers.json = {
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         var value = ko.utils.unwrapObservable(valueAccessor());
-        element.appendChild(renderjson(value));
+        if (element.hasChildNodes()){
+            element.replaceChild(renderjson(value), element.firstChild)
+        }else {
+            element.appendChild(renderjson(value));
+        }
     }
 };
 
-var wireTapConnection = new WiretapConnection();
+var messageStream = new MessageStream();
 
-var messageCollection = new MessageCollection(wireTapConnection);
+var messageCollection = new MessageCollection(messageStream);
+
+messageStream.start();
 
 $(document).ready(function () {
-    ko.applyBindings(new WiretapViewModel({collection: messageCollection}));
+    ko.applyBindings(new WiretapViewModel({collection: messageCollection, stream: messageStream}));
 });
 
 function WiretapViewModel(params) {
-    var self = this,
-        searchInput = ko.observable(),
-        searched = ko.computed(function () {
-            var searchValue = searchInput();
+    var self = this;
 
-            if (searchValue) {
-                var parsedObjectFilter;
-                try {
-                    parsedObjectFilter = JSON.parse(searchValue);
-                } catch (error) {
-
-                }
-                return _.chain(params.collection.messages())
-                    .filter(parsedObjectFilter)
-                    .filter(function (event) {
-                        var searchRegex = new RegExp(searchValue, 'gi');
-                        return event.topic.match(searchRegex) || event.channel.match(searchRegex);
-                    }).value();
-            }
-
-            return params.collection.messages();
-        }),
-        recent = ko.computed(function () {
-            return _.take(params.collection.messages(), 4);
-        });
-
-    self.searchValue = searchInput;
-    self.messages = params.collection.messages;
-    self.recent = recent;
-    self.searched = searched;
+    self.searchView =  new SearchView(params);
+    self.timelineView =  new TimelineView(params);
+    self.channelView =  new ChannelView(params);
     self.clear = function () {
-        params.collection.clear();
+        params.stream.resetEvent.publish();
     };
     self.filterSystemMessages = params.collection.filterSystemMessages;
 }

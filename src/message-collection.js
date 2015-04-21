@@ -3,18 +3,17 @@
  */
 
 
-function MessageCollection(wireTapConnection) {
+function MessageCollection(messageStream) {
     var self = this,
         allLogs = ko.observableArray([]),
         filterSystemMessages = ko.observable(true);
 
+    messageStream.resetEvent.addSubscriber(function () {
+        allLogs([]);
+    });
 
-    wireTapConnection.listenForMessages(function (message) {
-        if (message.type === 'init') {
-            allLogs([]);
-        } else {
-            allLogs.unshift(JSON.parse(message.data));
-        }
+    messageStream.newMessageEvent.addSubscriber(function (message) {
+        allLogs.unshift(message);
     });
 
     return {
