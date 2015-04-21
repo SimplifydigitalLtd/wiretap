@@ -5,7 +5,7 @@
 var require = {
     baseUrl: chrome.extension.getURL(''),
     paths: {
-        //"bootstrap":            "bower_components/components-bootstrap/js/bootstrap.min",
+        "bootstrap":            "bower_components/components-bootstrap/js/bootstrap.min",
         "jquery":                   "bower_components/jquery/dist/jquery",
         "jqueryui":                 "bower_components/jqueryui/jquery-ui",
         "knockout":                 "bower_components/knockout/dist/knockout",
@@ -16,7 +16,7 @@ var require = {
         "lodash":               "bower_components/lodash/dist/lodash"
     },
     shim: {
-        //"bootstrap": { deps: ["jquery"] }
+        "bootstrap": { deps: ["jquery"] },
         'underscore' : {
             exports : '_'
         }

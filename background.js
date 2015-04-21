@@ -2,12 +2,19 @@
  * Created by scarratt on 20/04/2015.
  */
 
-chrome.app.runtime.onLaunched.addListener(function() {
-    chrome.app.window.create('window.html', {
-        'bounds': {
-            'width': 400,
-            'height': 500
-        }
+
+chrome.runtime.onConnect.addListener(function(devToolsConnection) {
+    // assign the listener function to a variable so we can remove it later
+    var devToolsListener = function(message, sender, sendResponse) {
+        // Inject a content script into the identified tab
+        chrome.tabs.executeScript(message.tabId,
+            { file: 'content-scripts/' + message.scriptToInject });
+    };
+    // add the listener
+    devToolsConnection.onMessage.addListener(devToolsListener);
+
+    devToolsConnection.onDisconnect.addListener(function() {
+        devToolsConnection.onMessage.removeListener(devToolsListener);
     });
 });
 

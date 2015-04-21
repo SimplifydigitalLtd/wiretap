@@ -1,32 +1,29 @@
 {
   "manifest_version": 2,
   "name": "Wiretap",
-  "description": "This ",
+  "description": "This extension shows postal messages in the dev tools",
   "version": "1.0",
   "permissions": [
     "storage",
-    "nativeMessaging"
+    "nativeMessaging",
+    "tabs",
+    "http://*/*",
+    "https://*/*"
   ],
+  "background": {
+    "scripts": ["background.js"]
+  },
   "externally_connectable": {
     "matches": ["*://localhost/*"]
   },
-  "app": {
-    "background": {
-      "scripts": ["background.js"]
-    },
-    "content_scripts": [
-      {
-        "matches": [
-          "http://localhost/"
-        ],
-        "css": ["shared.css"],
-        "js": [
-          "require.config.js",
-          "bower_components/cajon/cajon.js",
-          "script.js"
-        ],
-        "run_at": "document_idle"
-      }
-    ]
-  }
+  "devtools_page": "devtools/devtools.html",
+  "web_accessible_resources": [
+    "content-scripts/*.js",
+    "bower_components/**/*.js",
+    "scripts/*.js",
+    "components/**/*.*",
+    "dom-manipulation/*.*",
+    "automation/*.*",
+    "style.css"
+  ]
 }
