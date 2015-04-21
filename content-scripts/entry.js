@@ -1,7 +1,5 @@
 (function () {
     "use strict";
-    console.log('loaded');
-
     var scriptElemet = document.createElement('script');
 
     var xhr = new XMLHttpRequest();
@@ -10,7 +8,7 @@
         if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             scriptElemet.innerText = 'var chromeExtensionId = "' + chrome.runtime.id + '"; ' + xhr.response;
 
-            //document.body.appendChild(scriptElemet);
+            document.body.appendChild(scriptElemet);
         }
     };
     xhr.send();

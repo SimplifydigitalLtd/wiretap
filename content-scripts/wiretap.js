@@ -1,11 +1,11 @@
+
 require(['postal.diagnostics'], function (DiagnosticsWireTap) {
-    console.log('loaded');
+
+    chrome.runtime.sendMessage(chromeExtensionId, {type: "init"});
+
     new DiagnosticsWireTap({
         writer: function (output) {
-            chrome.runtime.sendMessage(chromeExtensionId, {greeting: "hello"}, function(response) {
-                console.log('yeah');
-                console.log(response);
-            });
+            chrome.runtime.sendMessage(chromeExtensionId, {data: output});
         }
     });
 });
