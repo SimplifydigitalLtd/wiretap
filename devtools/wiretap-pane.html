@@ -32,7 +32,14 @@
 
 <h2>Wiretap</h2>
 
-<div class="realtime-chart"></div>
+<div>
+    <h4>Chart</h4>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="realtime-chart"></div>
+        </div>
+    </div>
+</div>
 
 <div>
     <h4>Stream Controls</h4>
@@ -66,8 +73,6 @@
                                     </button>
                                 </span>
                                 <input class="form-control" type="text" data-bind="value: text" disabled/>
-
-                                <!--<div data-bind="text: text, click: $parent.filterView.removeFilter"></div>-->
                             </div>
                         </div>
                         <!-- /ko -->

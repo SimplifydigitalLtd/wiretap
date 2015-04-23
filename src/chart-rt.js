@@ -14,8 +14,9 @@ var chartRT = function () {
         });
 
     var margin = {top: 6, right: 0, bottom: 20, left: 40},
-        width = 960 - margin.right,
+        width = 480 - margin.right,
         height = 120 - margin.top - margin.bottom;
+    debugger;
 
     var x = d3.time.scale()
         .domain([now - (n - 2) * duration, now - duration])
