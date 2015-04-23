@@ -30,26 +30,68 @@
 </head>
 <body>
 
+<h2>Wiretap</h2>
 
-<h1>Wiretap</h1>
+<div class="realtime-chart"></div>
 
 <div>
-    <h3>Stream Controls</h3><div class="realtime-chart"></div>
-    <button class="button" data-bind="click: stream.reset">Clear</button>
-    <label for="excludeSystemMessages">Exclude system messages</label>
-    <input type="checkbox" data-bind="checked: filterView.excludeSystemMessages" id="excludeSystemMessages"/>
-    <div>
-        <button class="button" data-bind="click: filterView.addFilter">Add Filter</button>
-        <input type="text" data-bind="value: filterView.currentFilterText"/>
-        <label for="exclusiveFilter">Exclusive filter</label>
-        <input type="checkbox" data-bind="checked: filterView.addExclusiveFilter" id="exclusiveFilter"/>
+    <h4>Stream Controls</h4>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" data-bind="click: filterView.addFilter">Add Filter</button>
+                                </span>
+                                <input class="form-control" type="text" data-bind="value: filterView.currentFilterText"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-bind="checked: filterView.addExclusiveFilter">
+                                    Exclusive filter
+                                </label>
+                            </div>
+                        </div>
+                        <!-- ko foreach: filterView.activeFilters -->
+                        <div class="form-group">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-danger" data-bind="click: $parent.filterView.removeFilter">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                                <input class="form-control" type="text" data-bind="value: text" disabled/>
+
+                                <!--<div data-bind="text: text, click: $parent.filterView.removeFilter"></div>-->
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <button class="btn btn-danger" data-bind="click: stream.reset">Clear</button>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-bind="checked: filterView.excludeSystemMessages">
+                                    Exclude system messages
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <!-- ko foreach: filterView.activeFilters -->
-    <div data-bind="text: text, click: $parent.filterView.removeFilter"></div>
-    <!-- /ko -->
 </div>
 <div>
-    <h3>Messages</h3>
+    <h4>Messages</h4>
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
             <a href="#timeline" aria-controls="timeline" role="tab" data-toggle="tab">Timeline</a>
@@ -61,51 +103,76 @@
             <a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search</a>
         </li>
     </ul>
-
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="timeline" data-bind="with: timelineView">
-            <div class="col-md-4">
-                <!-- ko foreach: groupedMessages -->
-                <div data-bind="click: function() {visible(!visible())}">
-                    <span data-bind="text: timestamp"></span>
-                        <span>Total:
-                        <span data-bind="text: messages().length"></span>
-                    </span>
+        <div role="tabpanel" class="tab-pane panel panel-default active" id="timeline" data-bind="with: timelineView">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-muted" data-bind="ifnot: groupedMessages().length">There are no captured Postal.js events!</p>
+                        <!-- ko foreach: groupedMessages -->
+                        <div class="item-cta" data-bind="click: function() {visible(!visible())}">
+                            <span data-bind="text: timestamp"></span>
+                            <span>Total:
+                                <span data-bind="text: messages().length"></span>
+                            </span>
+                            <span class="caret"></span>
+                        </div>
+                        <div data-bind="visible:visible">
+                            <!-- ko foreach: messages -->
+                            <div data-bind="json: $data"></div>
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+                    </div>
                 </div>
-                <div data-bind="visible:visible">
-                    <!-- ko foreach: messages -->
-                    <div data-bind="json: $data"></div>
-                    <!-- /ko -->
-                </div>
-                <!-- /ko -->
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="channel" data-bind="with: channelView">
-            <div class="col-md-4">
-                <!-- ko foreach: groupedMessages -->
-                <div data-bind="click: function() {visible(!visible())}">
-                    <span data-bind="text: channel"></span>
-                        <span>Total:
-                        <span data-bind="text: messages().length"></span>
-                    </span>
+        <div role="tabpanel" class="tab-pane panel panel-default" id="channel" data-bind="with: channelView">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-muted" data-bind="ifnot: groupedMessages().length">There are no captured Postal.js events!</p>
+                        <!-- ko foreach: groupedMessages -->
+                        <div class="item-cta" data-bind="click: function() {visible(!visible())}">
+                            <span data-bind="text: channel"></span>
+                            <span>Total:
+                                <span data-bind="text: messages().length"></span>
+                            </span>
+                            <span class="caret"></span>
+                        </div>
+                        <div data-bind="visible:visible">
+                            <!-- ko foreach: messages -->
+                            <div data-bind="json: $data"></div>
+                            <!-- /ko -->
+                        </div>
+                        <!-- /ko -->
+                    </div>
                 </div>
-                <div data-bind="visible:visible">
-                    <!-- ko foreach: messages -->
-                    <div data-bind="json: $data"></div>
-                    <!-- /ko -->
-                </div>
-                <!-- /ko -->
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="search" data-bind="with: searchView">
-            <div class="col-md-4">
-                <input data-bind="textInput: searchValue"/>
-                <span>Total: <span data-bind="text:searched().length"></span></span>
-
-                <div>
-                    <!-- ko foreach: searched -->
-                    <div data-bind="json: $data"></div>
-                    <!-- /ko -->
+        <div role="tabpanel" class="tab-pane panel panel-default" id="search" data-bind="with: searchView">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                                    <input class="form-control" type="text" data-bind="textInput: searchValue" placeholder="Search"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p class="form-control-static">Total: <span data-bind="text:searched().length"></span></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- ko foreach: searched -->
+                        <div data-bind="json: $data"></div>
+                        <!-- /ko -->
+                    </div>
                 </div>
             </div>
         </div>
