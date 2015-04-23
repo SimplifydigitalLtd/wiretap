@@ -12,18 +12,8 @@ function FilterView(params) {
     self.excludeSystemMessages = ko.observable(true);
     self.addExclusiveFilter = ko.observable(false);
     self.activeFilters = ko.observable();
-    self.activeFilters.calculateCombinedFilterView = function() {
-        var inclusive = _.map(params.eventFilter.inclusiveFilters, function (filterText) {
-            return {exclusive: false, text: filterText};
-        });
-
-        var exclusive = _.chain(params.eventFilter.exclusiveFilters)
-            .without(exclusiveFilterText)
-            .map(function (filterText) {
-                return {exclusive: true, text: filterText};
-            }).value();
-
-        this(_.union(inclusive, exclusive));
+    self.activeFilters.update = function() {
+        this(_.reject(params.eventFilter.calculateCombinedFilterView(), {text: exclusiveFilterText}));
     };
 
     self.excludeSystemMessages.subscribe(function (newValue) {
@@ -34,7 +24,7 @@ function FilterView(params) {
             params.eventFilter.removeFilter(systemMessageFilter);
         }
 
-        self.activeFilters.calculateCombinedFilterView();
+        self.activeFilters.update();
     });
 
     self.addFilter = function () {
@@ -43,13 +33,13 @@ function FilterView(params) {
 
         params.eventFilter.addFilter({exclusive: self.addExclusiveFilter(), text: filterText});
 
-        self.activeFilters.calculateCombinedFilterView();
+        self.activeFilters.update();
     };
 
     self.removeFilter = function (filter) {
         params.eventFilter.removeFilter(filter);
 
-        self.activeFilters.calculateCombinedFilterView();
+        self.activeFilters.update();
     };
 
     params.eventFilter.addFilter(systemMessageFilter);
