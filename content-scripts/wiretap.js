@@ -1,12 +1,10 @@
 
-require(['postal.diagnostics'], function (DiagnosticsWireTap) {
+require(['postal'], function (postal) {
 
     chrome.runtime.sendMessage(chromeExtensionId, {type: "init"});
 
-    new DiagnosticsWireTap({
-        writer: function (output) {
-            chrome.runtime.sendMessage(chromeExtensionId, {data: output});
-        }
+    postal.addWireTap( function( d, e ) {
+        chrome.runtime.sendMessage(chromeExtensionId, {data: e});
     });
 });
 

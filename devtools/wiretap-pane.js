@@ -30,8 +30,6 @@ $(document).ready(function () {
 function WiretapViewModel(params) {
     var self = this;
 
-
-    //new RealtimeStream(params);
     self.searchView =  new SearchView(params);
     self.timelineView =  new TimelineView(params);
     self.channelView =  new ChannelView(params);

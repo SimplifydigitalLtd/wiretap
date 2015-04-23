@@ -25,7 +25,7 @@ function MessageStream(options) {
         if (message.type === 'init') {
             self.resetEvent.publish();
         } else {
-            var event = JSON.parse(message.data);
+            var event = message.data;
 
             if (!excludeSystemMessages() || (excludeSystemMessages() && event.channel != 'postal')){
                 self.newMessageEvent.publish(event);
