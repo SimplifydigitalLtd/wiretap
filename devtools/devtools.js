@@ -6,8 +6,5 @@ chrome.devtools.panels.create("Wiretap",
     "MyPanelIcon.png",
     "devtools/wiretap-pane.html",
     function(panel) {
-        panel.onHidden.addListener(function () {
-            console.log(panel);
-        })
     }
 );
