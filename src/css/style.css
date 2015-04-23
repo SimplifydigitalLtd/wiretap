@@ -6,13 +6,27 @@ h4 { margin: 20px 0 10px; }
 
 .nav-tabs { border-bottom: 0; }
 .nav-tabs .active:first-child:after { width: 4px; height: 4px; border-left: 1px solid #ddd; margin-top: -2px; content: ""; background: #fff; position: absolute; }
-//.tab-pane.panel { border-top-left-radius: 0; }
 
 .text-muted { margin-bottom: 0; }
 
 .item-cta { padding: 4px 8px; border-radius: 4px; margin: 4px 0; color: #337ab7; cursor: pointer; }
 .item-cta:hover { background: #eee; }
 
-//.disclosure { font-size: 16px; }
 .renderjson { margin: 4px 0; font-size: 12px; }
 
+svg {
+    font: 10px sans-serif;
+}
+.line {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1px;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.realtime-chart { float:right}
