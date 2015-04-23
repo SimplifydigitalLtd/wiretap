@@ -1,11 +1,11 @@
 
 if (postal){
     tap()
-} else{
+} else if (require) {
     require(['postal'], function (postal) {
         tap();
     });
-}else {
+} else {
     console.log('Cannot Wiretap this site and it has neither require nor postal defined.')
 }
 
