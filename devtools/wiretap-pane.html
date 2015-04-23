@@ -13,8 +13,11 @@
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/d3/d3.min.js"></script>
+    <script src="/src/chart-rt.js"></script>
     <script src="/src/message-stream.js"></script>
     <script src="/src/message-collection.js"></script>
+    <script src="/src/realtime-stream.js"></script>
     <script src="/src/search-view.js"></script>
     <script src="/src/timeline-view.js"></script>
     <script src="/src/channel-view.js"></script>
@@ -23,14 +26,17 @@
 </head>
 <body>
 
-<div>
-    <h2>Wiretap</h2>
-    <button class="button" data-bind="click:clear">Clear</button>
-    <label for="filterSystemMessages">Filter system messages</label>
-    <input type="checkbox" data-bind="checked:filterSystemMessages" id="filterSystemMessages"/>
-</div>
 
+<h1>Wiretap</h1>
+
+<div data-bind="with:stream">
+    <h3>Stream Controls</h3>
+    <button class="button" data-bind="click:reset">Clear</button>
+    <label for="excludeSystemMessages">Exclude system messages</label>
+    <input type="checkbox" data-bind="checked:excludeSystemMessages" id="excludeSystemMessages"/>
+</div>
 <div>
+    <h3>Messages</h3>
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
             <a href="#timeline" aria-controls="timeline" role="tab" data-toggle="tab">Timeline</a>
@@ -46,36 +52,36 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="timeline" data-bind="with: timelineView">
             <div class="col-md-4">
-                    <!-- ko foreach: groupedMessages -->
-                    <div data-bind="click: function() {visible(!visible())}">
-                        <span data-bind="text: timestamp"></span>
+                <!-- ko foreach: groupedMessages -->
+                <div data-bind="click: function() {visible(!visible())}">
+                    <span data-bind="text: timestamp"></span>
                         <span>Total:
                         <span data-bind="text: messages().length"></span>
                     </span>
-                    </div>
-                    <div data-bind="visible:visible">
+                </div>
+                <div data-bind="visible:visible">
                     <!-- ko foreach: messages -->
                     <div data-bind="json: $data"></div>
                     <!-- /ko -->
-                    </div>
-                    <!-- /ko -->
+                </div>
+                <!-- /ko -->
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="channel" data-bind="with: channelView">
             <div class="col-md-4">
-                    <!-- ko foreach: groupedMessages -->
-                    <div data-bind="click: function() {visible(!visible())}">
-                        <span data-bind="text: channel"></span>
+                <!-- ko foreach: groupedMessages -->
+                <div data-bind="click: function() {visible(!visible())}">
+                    <span data-bind="text: channel"></span>
                         <span>Total:
                         <span data-bind="text: messages().length"></span>
                     </span>
-                    </div>
-                    <div data-bind="visible:visible">
-                        <!-- ko foreach: messages -->
-                        <div data-bind="json: $data"></div>
-                        <!-- /ko -->
-                    </div>
+                </div>
+                <div data-bind="visible:visible">
+                    <!-- ko foreach: messages -->
+                    <div data-bind="json: $data"></div>
                     <!-- /ko -->
+                </div>
+                <!-- /ko -->
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="search" data-bind="with: searchView">

@@ -1,9 +1,6 @@
 /**
  * Created by scarratt on 21/04/2015.
  */
-var backgroundPageConnection = chrome.runtime.connect({
-    name: "devtools"
-});
 
 renderjson.set_show_to_level(1);
 
@@ -33,11 +30,13 @@ $(document).ready(function () {
 function WiretapViewModel(params) {
     var self = this;
 
+
+    new RealtimeStream(params);
     self.searchView =  new SearchView(params);
     self.timelineView =  new TimelineView(params);
     self.channelView =  new ChannelView(params);
     self.clear = function () {
         params.stream.resetEvent.publish();
     };
-    self.filterSystemMessages = params.collection.filterSystemMessages;
+    self.stream = params.stream;
 }

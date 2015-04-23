@@ -12,7 +12,7 @@ function TimelineView(params) {
     });
 
     stream.newMessageEvent.addSubscriber(function (message) {
-        var messageTime = moment(message.timeStamp).format('MMMM Do YYYY, h:mm:s a');
+        var messageTime = moment(message.timeStamp).format('MMMM Do YYYY, h:mm:ss a');
 
         var targetGroup = _.find(groupedMessages(), {timestamp: messageTime});
 

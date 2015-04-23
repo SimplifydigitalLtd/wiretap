@@ -3,7 +3,9 @@
  */
 
 function MessageStream(options) {
-    var self = this;
+    var self = this,
+        excludeSystemMessages = ko.observable(true);
+
     options = options || {name: 'wiretap'};
     var backgroundPageConnection = chrome.runtime.connect({
         name: options.name
@@ -11,6 +13,10 @@ function MessageStream(options) {
 
     self.newMessageEvent = {};
     self.resetEvent = {};
+    self.excludeSystemMessages = excludeSystemMessages;
+    self.reset= function(){
+        self.resetEvent.publish();
+    };
 
     publisher.make(self.newMessageEvent);
     publisher.make(self.resetEvent);
@@ -19,7 +25,11 @@ function MessageStream(options) {
         if (message.type === 'init') {
             self.resetEvent.publish();
         } else {
-            self.newMessageEvent.publish(JSON.parse(message.data));
+            var event = JSON.parse(message.data);
+
+            if (!excludeSystemMessages() || (excludeSystemMessages() && event.channel != 'postal')){
+                self.newMessageEvent.publish(event);
+            }
         }
     });
 

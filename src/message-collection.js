@@ -5,8 +5,7 @@
 
 function MessageCollection(messageStream) {
     var self = this,
-        allLogs = ko.observableArray([]),
-        filterSystemMessages = ko.observable(true);
+        allLogs = ko.observableArray([]);
 
     messageStream.resetEvent.addSubscriber(function () {
         allLogs([]);
@@ -18,16 +17,8 @@ function MessageCollection(messageStream) {
 
     return {
         messages: ko.computed(function () {
-            if (filterSystemMessages()) {
-                return _.filter(allLogs(), function (event) {
-                    return event.channel != 'postal';
-                });
-            } else {
-                return allLogs();
-            }
-
+            return allLogs();
         }),
-        filterSystemMessages: filterSystemMessages,
         clear: function () {
             allLogs([]);
         }
