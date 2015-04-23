@@ -14,10 +14,13 @@
     <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/bower_components/moment/moment.js"></script>
     <script src="/bower_components/d3/d3.min.js"></script>
+    <script src="/bower_components/objeq/objeq.min.js"></script>
     <script src="/src/chart-rt.js"></script>
+    <script src="/src/event-filter.js"></script>
     <script src="/src/message-stream.js"></script>
     <script src="/src/message-collection.js"></script>
     <script src="/src/realtime-stream-view.js"></script>
+    <script src="/src/filter-view.js"></script>
     <script src="/src/search-view.js"></script>
     <script src="/src/timeline-view.js"></script>
     <script src="/src/channel-view.js"></script>
@@ -29,11 +32,20 @@
 
 <h1>Wiretap</h1>
 
-<div data-bind="with:stream">
+<div>
     <h3>Stream Controls</h3>
-    <button class="button" data-bind="click:reset">Clear</button>
+    <button class="button" data-bind="click: stream.reset">Clear</button>
     <label for="excludeSystemMessages">Exclude system messages</label>
-    <input type="checkbox" data-bind="checked:excludeSystemMessages" id="excludeSystemMessages"/>
+    <input type="checkbox" data-bind="checked: filterView.excludeSystemMessages" id="excludeSystemMessages"/>
+    <div>
+        <button class="button" data-bind="click: filterView.addFilter">Add Filter</button>
+        <input type="text" data-bind="value: filterView.currentFilterText"/>
+        <label for="exclusiveFilter">Exclusive filter</label>
+        <input type="checkbox" data-bind="checked: filterView.addExclusiveFilter" id="exclusiveFilter"/>
+    </div>
+    <!-- ko foreach: filterView.activeFilters -->
+    <div data-bind="text: text, click: $parent.filterView.removeFilter"></div>
+    <!-- /ko -->
 </div>
 <div>
     <h3>Messages</h3>

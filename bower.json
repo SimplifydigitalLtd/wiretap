@@ -19,6 +19,7 @@
     "tests"
   ],
   "dependencies": {
+    "objeq": "https://github.com/agilosoftware/objeq.git",
     "jquery": "~2.1.1",
     "knockout": "~3.3.0",
     "knockout-projections": "~1.1.0",

@@ -17,19 +17,21 @@ ko.bindingHandlers.json = {
     }
 };
 
-var messageStream = new MessageStream();
+var eventFilter = new EventFilter();
+var messageStream = new MessageStream({eventFilter: eventFilter});
 
 var messageCollection = new MessageCollection(messageStream);
 
 messageStream.start();
 
 $(document).ready(function () {
-    ko.applyBindings(new WiretapViewModel({collection: messageCollection, stream: messageStream}));
+    ko.applyBindings(new WiretapViewModel({collection: messageCollection, stream: messageStream, eventFilter: eventFilter}));
 });
 
 function WiretapViewModel(params) {
     var self = this;
 
+    self.filterView = new FilterView(params);
     self.searchView =  new SearchView(params);
     self.timelineView =  new TimelineView(params);
     self.channelView =  new ChannelView(params);

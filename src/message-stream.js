@@ -2,13 +2,13 @@
  * Created by scarratt on 21/04/2015.
  */
 
-function MessageStream(options) {
+function MessageStream(params) {
     var self = this,
         excludeSystemMessages = ko.observable(true);
 
-    options = options || {name: 'wiretap'};
+    params = params || {name: 'wiretap'};
     var backgroundPageConnection = chrome.runtime.connect({
-        name: options.name
+        name: params.name
     });
 
     self.newMessageEvent = {};
@@ -27,7 +27,7 @@ function MessageStream(options) {
         } else {
             var event = message.data;
 
-            if (!excludeSystemMessages() || (excludeSystemMessages() && event.channel != 'postal')){
+            if (params.eventFilter.eventAllowed(event)){ // excludeSystemMessages() || (excludeSystemMessages() && event.channel != 'postal')){
                 self.newMessageEvent.publish(event);
             }
         }
