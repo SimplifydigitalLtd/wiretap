@@ -17,7 +17,6 @@ function FilterView(params) {
     };
 
     self.excludeSystemMessages.subscribe(function (newValue) {
-
         if (newValue){
             params.eventFilter.addFilter(systemMessageFilter);
         } else {
@@ -29,6 +28,14 @@ function FilterView(params) {
 
     self.addFilter = function () {
         var filterText = self.currentFilterText();
+
+        if (/"[^"]*"[^:]*:[^:]*"[^"]*".*/.test(filterText)){
+            var regExp = /"[^"]*"/g;
+            var propName = regExp.exec(filterText);
+            var value = regExp.exec(filterText);
+            filterText = (propName + " == '" + value + "'").replace(/"/g, "");
+        }
+
         self.currentFilterText('');
 
         params.eventFilter.addFilter({exclusive: self.addExclusiveFilter(), text: filterText});
