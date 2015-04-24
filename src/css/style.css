@@ -4,7 +4,7 @@ h2 { margin: 10px 0; }
 
 h4 { margin: 20px 0 10px; }
 
-.logo { width: 81px; height: 42px; background: url("img/wiretap_logo_square.png"); float: right;}
+.logo { width: 200px; height: 70px; background: url("img/wiretap_logo_full.png"); float: right;}
 .nav-tabs { border-bottom: 0; }
 .nav-tabs .active:first-child:after { width: 4px; height: 4px; border-left: 1px solid #ddd; margin-top: -2px; content: ""; background: #fff; position: absolute; }
 

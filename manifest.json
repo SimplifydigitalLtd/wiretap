@@ -26,5 +26,8 @@
     "dom-manipulation/*.*",
     "automation/*.*",
     "style.css"
-  ]
+  ],
+  "icons": { "16": "icons/wiretap_16.png",
+           "48": "icons/wiretap_48.png",
+          "128": "icons/wiretap_128.png" }
 }
