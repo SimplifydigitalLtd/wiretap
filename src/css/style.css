@@ -14,19 +14,7 @@ h4 { margin: 20px 0 10px; }
 
 .renderjson { margin: 4px 0; font-size: 12px; }
 
-svg {
-    font: 10px sans-serif;
-}
-.line {
-    fill: none;
-    stroke: #000;
-    stroke-width: 1px;
-}
-
-.axis path, .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-}
-
-.realtime-chart { float:right}
+svg { width: 100% !important; font: 10px sans-serif; }
+.line { fill: none; stroke: #999; stroke-width: 1px; }
+.axis path, .axis line { fill: none; stroke: #999; shape-rendering: crispEdges; }
+text { color: #ccc; }

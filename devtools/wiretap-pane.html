@@ -32,7 +32,14 @@
 
 <h2>Wiretap</h2>
 
-<div class="realtime-chart"></div>
+<div>
+    <h4>Chart</h4>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="realtime-chart"></div>
+        </div>
+    </div>
+</div>
 
 <div>
     <h4>Stream Controls</h4>
@@ -66,8 +73,6 @@
                                     </button>
                                 </span>
                                 <input class="form-control" type="text" data-bind="value: text" disabled/>
-
-                                <!--<div data-bind="text: text, click: $parent.filterView.removeFilter"></div>-->
                             </div>
                         </div>
                         <!-- /ko -->
@@ -111,9 +116,11 @@
                         <p class="text-muted" data-bind="ifnot: groupedMessages().length">There are no captured Postal.js events!</p>
                         <!-- ko foreach: groupedMessages -->
                         <div class="item-cta" data-bind="click: function() {visible(!visible())}">
-                            <span data-bind="text: timestamp"></span>
+                            <span>Timestamp:
+                                <strong data-bind="text: timestamp"></strong>
+                            </span>
                             <span>Total:
-                                <span data-bind="text: messages().length"></span>
+                                <strong data-bind="text: messages().length"></strong>
                             </span>
                             <span class="caret"></span>
                         </div>
@@ -134,9 +141,11 @@
                         <p class="text-muted" data-bind="ifnot: groupedMessages().length">There are no captured Postal.js events!</p>
                         <!-- ko foreach: groupedMessages -->
                         <div class="item-cta" data-bind="click: function() {visible(!visible())}">
-                            <span data-bind="text: channel"></span>
+                            <span>Channel:
+                                <strong data-bind="text: channel"></strong>
+                            </span>
                             <span>Total:
-                                <span data-bind="text: messages().length"></span>
+                                <strong data-bind="text: messages().length"></strong>
                             </span>
                             <span class="caret"></span>
                         </div>

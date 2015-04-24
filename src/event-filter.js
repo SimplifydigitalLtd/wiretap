@@ -21,12 +21,14 @@ function EventFilter() {
     };
 
     self.addFilter = function (filter) {
-        if (filter.exclusive) {
-            self.exclusiveFilters.push(filter.text);
-        } else {
-            self.inclusiveFilters.push(filter.text);
+        debugger;
+        if (filter.text) {
+            if (filter.exclusive) {
+                self.exclusiveFilters.push(filter.text);
+            } else {
+                self.inclusiveFilters.push(filter.text);
+            }
         }
-
     };
 
     self.removeFilter = function (filter) {
