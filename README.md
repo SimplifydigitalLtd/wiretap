@@ -18,10 +18,11 @@ Your application must use:
 7. Open your website on localhost
 8. Open dev tools > select wiretap tab :)
 
-# Interface
-![](https://github.com/SimplifydigitalLtd/wiretap/blob/master/Screenshot-wiretap.png)
-
 License
 ----
 
 MIT
+
+# Interface
+![](https://github.com/SimplifydigitalLtd/wiretap/blob/master/Screenshot-wiretap.png)
+
