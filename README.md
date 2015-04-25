@@ -20,3 +20,8 @@ Your application must use:
 
 # Interface
 ![](https://github.com/SimplifydigitalLtd/wiretap/blob/master/Screenshot-wiretap.png)
+
+License
+----
+
+MIT
